@@ -1,5 +1,4 @@
-//YOUR FIREBASE LINKS
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyBBKUte1pMdRd3GIYl2Bk7CWRXxusHH3x8",
   authDomain: "kwitter-cb403.firebaseapp.com",
   databaseURL: "https://kwitter-cb403.firebaseio.com",
@@ -30,10 +29,25 @@ function getData()
          firebase_message_id = childKey;
          message_data = childData;
 //Start code
-
+name=message_data["name"];
+message=message_data["message"];
+like=message_data["like"];
+name1="<h4>"+name+"<img class='user_tick' src='tick.png'>""</h4>";
+message1="<h4 class='message_h4'>"+message+"</h4>";
+button="<button class='btn btn-warning' id=>"+firebase_message_id+" value= "+like+" onclick='updatelike(this.id)'>";
+like1="<span class='glyphicon glyphicon-thumbs-up'> Like: "+like+"</span></button><hr>";
+row=name1+message1+button+like1;
+    document.getElementById("output").innerHTML+=row;
 //End code
       } });  }); }
-//getData();
+getData();
+
+function updatelike(messageid){
+    likes = document.getElementById(messageid).value; 
+    updated_likes = Number(likes) + 1;
+    firebase.database().ref(room_name).child(messageid).update({ like : updated_likes });
+
+}
 function logout(){
     localStorage.removeItem("username");
     localStorage.removeItem("roomname");
